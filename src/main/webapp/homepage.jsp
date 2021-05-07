@@ -10,19 +10,25 @@
 </head>
 <body
 	style="background-image: radial-gradient(circle at top right, #9600ff, #aebaf8);">
-	<div class="box1" style="background-image: url(/img/plus.png);    background-size: cover;">
+	<div id="add_file_box" class="box1"
+		style="background-image: url(/img/plus.png);background-size: cover;">
 		<p id="send">Click to add file</p>
+		<form id="form" action="/addfile" method="post">
+		<input id ="save_file" type="file" placeholder="file">
+	
+		</form>
 		
 	</div>
 	<div class="box">
 		<p id="recive">Receive</p>
-		<form class="form">
+		<form class="form" action="/send" method="post">
 			<input id="key" type="text" name="key" placeholder="Secret Key" /> <br>
 			<button type="submit">Submit</button>
 		</form>
 
 	</div>
 
+	<script src="js/homepage.js"></script>
 
 </body>
 </html>
