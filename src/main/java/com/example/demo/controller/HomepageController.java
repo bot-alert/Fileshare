@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,14 +43,21 @@ public class HomepageController {
 	@GetMapping("/download")
 	public ResponseEntity<Resource> downloadFile(@RequestParam("key") String id) {
 		FileData fileData = filestorageimple.downloadFile(id);
-		System.err.println(fileData.getFilename());
-		System.err.println(fileData.getFiletype());
-		System.err.println(fileData.getId());
-		System.err.println(fileData.getUuid());
-		System.err.println(fileData.getFile());
+
+		if (fileData == null) {
+
+			return null;
+		}
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(fileData.getFiletype()))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename= " + fileData.getFilename())
 				.body(new ByteArrayResource(fileData.getFile()));
 
 	}
+
+	@GetMapping
+	public String filenotfound() {
+		return "homepage.jsp";
+
+	}
+
 }

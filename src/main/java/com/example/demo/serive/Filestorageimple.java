@@ -1,4 +1,5 @@
 package com.example.demo.serive;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.UUID;
@@ -13,13 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.FileData;
 import com.example.demo.repo.FileDatabase;
+
 @Service
 @Component("filestorage")
 public class Filestorageimple implements FileStorageService {
 	@Autowired
 	@Qualifier("database")
 	FileDatabase fileDatabase;
-	
 
 	@Override
 	public String save(MultipartFile file) {
@@ -29,12 +30,12 @@ public class Filestorageimple implements FileStorageService {
 			fileData.setFile(file.getBytes());
 			fileData.setFilename(file.getOriginalFilename());
 			fileData.setFiletype(file.getContentType());
-			UUID uuid = UUID. randomUUID();
-			String uuidAsString = uuid. toString();
-			uuidAsString = uuidAsString.replaceAll("-","");
-			String newidString="";
-			for(int i =0;i<8;i++) {
-				newidString = newidString+uuidAsString.charAt(i);
+			UUID uuid = UUID.randomUUID();
+			String uuidAsString = uuid.toString();
+			uuidAsString = uuidAsString.replaceAll("-", "");
+			String newidString = "";
+			for (int i = 0; i < 8; i++) {
+				newidString = newidString + uuidAsString.charAt(i);
 			}
 			fileData.setUuid(newidString);
 			fileDatabase.save(fileData);
@@ -52,6 +53,5 @@ public class Filestorageimple implements FileStorageService {
 		FileData fileData = fileDatabase.getFileByUuid(id);
 		return fileData;
 	}
-
 
 }
