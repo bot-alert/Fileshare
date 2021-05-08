@@ -20,7 +20,8 @@ File sharing web app is an application built for the seamless transfer of files 
 ![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/2.png)
 ## User copies the key and submits it and the file gets downloaded 
 ![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/3.png)
-
+## How the data looks on database
+![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/4.png)
 
 > Note: Still under development feel free to contribute
 
