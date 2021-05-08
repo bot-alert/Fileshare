@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="cs/homepage.css">
 </head>
+
 <body
 	style="background-image: radial-gradient(circle at top right, #9600ff, #aebaf8);">
 	<div id="add_file_box" class="box1"
@@ -31,8 +32,8 @@
 	</div>
 	<div class="box">
 		<p id="recive">Receive</p>
-		<form class="form" action="/download" method="get">
-			<input id="key" type="text" placeholder="Secret Key" /> <br>
+		<form  action="/download" method="get">
+			<input id="key" type="text" name="key" placeholder="Secret Key" /> <br>
 			<button type="submit">Submit</button>
 		</form>
 

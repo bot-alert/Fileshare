@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,35 +23,35 @@ import com.example.demo.serive.Filestorageimple;
 
 @Controller
 public class HomepageController {
-	@Autowired 
+	@Autowired
 	@Qualifier("filestorage")
 	Filestorageimple filestorageimple;
+
 	@RequestMapping("/")
 	public ModelAndView homeView() {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("homepage.jsp");
 		return view;
 	}
+
 	@PostMapping("/")
-	public ModelAndView addfiletoDatabase(@RequestParam("file_name") MultipartFile file,HttpSession session) {
-		ModelAndView view = new ModelAndView("homepage.jsp"); 
-	       view.addObject("id",  filestorageimple.save(file));
+	public ModelAndView addfiletoDatabase(@RequestParam("file_name") MultipartFile file, HttpSession session) {
+		ModelAndView view = new ModelAndView("homepage.jsp");
+		view.addObject("id", filestorageimple.save(file));
 		return view;
 	}
-	@GetMapping("/{id}")
-	public ResponseEntity<Resource> downloadFile (@PathVariable String id) {
-		  FileData fileData =  filestorageimple.downloadFile(id);
-System.err.println(fileData.getFilename());
-System.err.println(fileData.getFiletype());
-System.err.println(fileData.getId());
-System.err.println(fileData.getUuid());
-System.err.println(fileData.getFile());
-	return ResponseEntity.ok()
-     .contentType(MediaType.parseMediaType(fileData.getFiletype()))
-     .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename= "+fileData.getFilename())
-     .body(new ByteArrayResource(fileData.getFile()));
 
-		 
+	@GetMapping("/download")
+	public ResponseEntity<Resource> downloadFile(@RequestParam("key") String id) {
+		FileData fileData = filestorageimple.downloadFile(id);
+		System.err.println(fileData.getFilename());
+		System.err.println(fileData.getFiletype());
+		System.err.println(fileData.getId());
+		System.err.println(fileData.getUuid());
+		System.err.println(fileData.getFile());
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(fileData.getFiletype()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename= " + fileData.getFilename())
+				.body(new ByteArrayResource(fileData.getFile()));
 
 	}
 }
