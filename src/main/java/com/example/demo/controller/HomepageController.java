@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
-import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.example.demo.service.FileStorageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,45 +19,49 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.FileData;
-import com.example.demo.serive.Filestorageimple;
+
+import java.util.Objects;
 
 @Controller
+@RequiredArgsConstructor
 public class HomepageController {
-	@Autowired
-	@Qualifier("filestorage")
-	Filestorageimple filestorageimple;
+
+	private final FileStorageService storageService;
 
 	@RequestMapping("/")
 	public ModelAndView homeView() {
 		ModelAndView view = new ModelAndView();
-		view.setViewName("homepage.jsp");
+		view.setViewName("homepage");
 		return view;
 	}
 
 	@PostMapping("/")
-	public ModelAndView addfiletoDatabase(@RequestParam("file_name") MultipartFile file, HttpSession session) {
-		ModelAndView view = new ModelAndView("homepage.jsp");
-		view.addObject("id", filestorageimple.save(file));
+	public ModelAndView addfiletoDatabase(@RequestParam("file_name") MultipartFile file) {
+		ModelAndView view = new ModelAndView("homepage");
+		view.addObject("id", storageService.save(file));
 		return view;
 	}
 
 	@GetMapping("/download")
 	public ResponseEntity<Resource> downloadFile(@RequestParam("key") String id) {
-		FileData fileData = filestorageimple.downloadFile(id);
 
-		if (fileData == null) {
+		Pair<Resource,FileData> fileDataPair = storageService.downloadFile(id);
 
-			return null;
+		if (Objects.isNull(fileDataPair)) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.header(HttpHeaders.LOCATION, "/")
+					.build();
 		}
-		return ResponseEntity.ok().contentType(MediaType.parseMediaType(fileData.getFiletype()))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename= " + fileData.getFilename())
-				.body(new ByteArrayResource(fileData.getFile()));
+
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(fileDataPair.getSecond().getFileType()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename= " + fileDataPair.getSecond().getFilename())
+				.body(fileDataPair.getFirst());
 
 	}
 
-	@GetMapping
-	public String filenotfound() {
-		return "homepage.jsp";
+	@GetMapping("/error")
+	public String error() {
+		return "error";
 
 	}
 

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  file-share-database:
+    image: mysql:8.0
+    container_name: file-share-database
+    environment:
+      MYSQL_ROOT_PASSWORD: Account123
+      MYSQL_DATABASE: file
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  file-share:
+    restart: on-failure
+    container_name: file-share-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - file-share-database
+    volumes:
+      - file-share-storage:/uploads
+
+volumes:
+  mysql-data:
+  file-share-storage:
