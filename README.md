@@ -17,12 +17,12 @@ File sharing web app is an application built for the seamless transfer of files 
 
 ## Homepage
 ![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/1.png)
-## User uploads ```randompic(1).jpg``` and receive code ```b4a9944c```
+## User uploads ```randompic(1).jpg``` and receive code 
 ![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/2.png)
 ## User copies the key and submits it and the file gets downloaded 
 ![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/3.png)
 ## How the data looks on database
-![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/4.PNG)
+![alt text](https://raw.githubusercontent.com/bot-alert/Fileshare/master/readmepic/4.png)
 
 > Note: Still under development feel free to contribute
 
