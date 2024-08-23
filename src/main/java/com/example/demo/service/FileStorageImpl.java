@@ -6,6 +6,7 @@ import com.example.demo.utils.FileDirectoryResolver;
 import com.example.demo.utils.FileFormatCategorizer;
 import com.example.demo.utils.FileUuidGenerator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.util.Pair;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+@Slf4j
 @Service
 @Component
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class FileStorageImpl implements FileStorageService {
 
     @Override
     public String save(MultipartFile file) {
-
+        log.info("uploading file : {}" ,file.getOriginalFilename());
         FileData fileData = new FileData();
         fileData.setFileFormat(FileFormatCategorizer.categorizeFileType(file.getOriginalFilename()));
         fileData.setFilename(file.getOriginalFilename());
@@ -64,8 +66,13 @@ public class FileStorageImpl implements FileStorageService {
         if (!file.exists()) {
             return null;
         }
-
+        log.info("downloading file : {}" ,fileData.getFilename());
         return Pair.of(new FileSystemResource(file), fileData);
+    }
+
+    @Override
+    public long totalUplodedFile() {
+        return fileDatabaseRepository.count();
     }
 
 }

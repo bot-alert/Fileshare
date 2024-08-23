@@ -3,7 +3,6 @@ package com.example.demo.controller;
 
 import com.example.demo.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +31,7 @@ public class HomepageController {
 	public ModelAndView homeView() {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("homepage");
+		view.addObject("totalCount",storageService.totalUplodedFile());
 		return view;
 	}
 
@@ -39,6 +39,7 @@ public class HomepageController {
 	public ModelAndView addfiletoDatabase(@RequestParam("file_name") MultipartFile file) {
 		ModelAndView view = new ModelAndView("homepage");
 		view.addObject("id", storageService.save(file));
+		view.addObject("totalCount",storageService.totalUplodedFile());
 		return view;
 	}
 

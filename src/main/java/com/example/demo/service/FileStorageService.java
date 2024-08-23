@@ -10,5 +10,5 @@ public interface FileStorageService {
     String save(MultipartFile file);
 
     Pair<Resource,FileData> downloadFile(String id);
-
+    long totalUplodedFile();
 }

@@ -7,7 +7,8 @@
 	<link rel="stylesheet" href="css/homepage.css">
 </head>
 
-<body style="background-image: radial-gradient(circle at top right, #9600ff, #aebaf8);">
+<!--<body style="background-image: radial-gradient(circle at top right, #9600ff, #aebaf8);">-->
+<body >
 
 <!-- Check if 'id' is not null and display the copy div -->
 <div th:if="${id != null}" id="copy_div" onclick="copy()" class="newbox">
@@ -21,8 +22,8 @@
 	<div th:if="${id != null}">
 		<script>
 			document.addEventListener("DOMContentLoaded", function() {
-				const costumetext = document.getElementById("send");
-				costumetext.innerHTML = "Click the above secret key to copy";
+				const text = document.getElementById("send");
+				text.innerHTML = "Click the above secret key to copy code";
 			});
 		</script>
 	</div>
@@ -37,6 +38,7 @@
 		<input id="key" type="text" name="key" placeholder="Secret Key" /> <br>
 		<button type="submit">Submit</button>
 	</form>
+	<p  class="total_upload" th:text="'We have received '+ ${totalCount} + ' uploads today'"></p>
 </div>
 
 <script src="js/homepage.js"></script>

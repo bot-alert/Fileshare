@@ -17,6 +17,6 @@ public class FileUuidGenerator {
                 + Integer.toHexString(COUNTER.getAndIncrement());
 
         // Combine the short code with the unique suffix
-        return shortCode + "-" + uniqueSuffix;
+        return shortCode + "-" + uniqueSuffix+"-"+COUNTER;
     }
 }

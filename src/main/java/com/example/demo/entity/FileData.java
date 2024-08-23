@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "filedata")
@@ -25,4 +28,6 @@ public class FileData {
 	private FileFormat fileFormat;
 	@Column(name = "file_type")
 	private String fileType;
+	@CreatedDate
+	private Date created;
 }

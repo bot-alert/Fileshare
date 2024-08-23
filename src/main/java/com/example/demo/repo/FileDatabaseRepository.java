@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface FileDatabaseRepository extends JpaRepository<FileData, Long> {
 
     FileData getFileByUuid(String id);
+
+    long count();
 }
 
